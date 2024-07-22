@@ -1,0 +1,30 @@
+# Declare your Buildkite pipelines below
+---
+# yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/rre.schema.json
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildkite-pipeline-DaveOps-playground
+  description: Buildkite Pipeline for DaveOps-playground
+  links:
+    - title: Pipeline
+      url: https://buildkite.com/elastic/DaveOps-playground
+
+spec:
+  type: buildkite-pipeline
+  owner: group:eng-prod-engagement-team
+  system: buildkite
+  implementation:
+    apiVersion: buildkite.elastic.dev/v1
+    kind: Pipeline
+    metadata:
+      name: DaveOps-playground
+      description: Davesys911 Buildkite playground - repository visibility intentional set to public to enable testing public fork ci workflows
+    spec:
+      repository: elastic/DaveOps-playground
+      pipeline_file: ".buildkite/pipeline.yml"
+      teams:
+        eng-prod-engagement-team:
+          access_level: MANAGE_BUILD_AND_READ
+        everyone:
+          access_level: READ_ONLY
