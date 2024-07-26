@@ -28,3 +28,20 @@ spec:
           access_level: MANAGE_BUILD_AND_READ
         everyone:
           access_level: READ_ONLY
+  type: buildkite-pipeline
+  owner: group:eng-prod-engagement-team
+  system: buildkite
+  implementation:
+    apiVersion: buildkite.elastic.dev/v1
+    kind: Pipeline
+    metadata:
+      name: bump-sh-example
+      description: Davesys911 Buildkite playground - repository visibility intentional set to public to enable testing public fork ci workflows
+    spec:
+      repository: elastic/DaveOps-playground
+      pipeline_file: ".buildkite/bump_sh.yml"
+      teams:
+        eng-prod-engagement-team:
+          access_level: MANAGE_BUILD_AND_READ
+        everyone:
+          access_level: READ_ONLY
