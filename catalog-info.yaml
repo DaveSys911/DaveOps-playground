@@ -28,6 +28,18 @@ spec:
           access_level: MANAGE_BUILD_AND_READ
         everyone:
           access_level: READ_ONLY
+---
+# yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/rre.schema.json
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildkite-pipeline-bump-sh-examples
+  description: Buildkite Pipeline for bump-sh-examples
+  links:
+    - title: Pipeline
+      url: https://buildkite.com/elastic/bump-sh-examples
+
+spec:
   type: buildkite-pipeline
   owner: group:eng-prod-engagement-team
   system: buildkite
@@ -38,7 +50,7 @@ spec:
       name: bump-sh-example
       description: Davesys911 Buildkite playground - repository visibility intentional set to public to enable testing public fork ci workflows
     spec:
-      repository: elastic/DaveOps-playground
+      repository: elastic/bump-sh-examples
       pipeline_file: ".buildkite/bump_sh.yml"
       teams:
         eng-prod-engagement-team:
