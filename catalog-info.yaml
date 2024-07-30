@@ -50,7 +50,7 @@ spec:
       name: bump-sh-example
       description: Davesys911 Buildkite playground - repository visibility intentional set to public to enable testing public fork ci workflows
     spec:
-      repository: elastic/bump-sh-examples
+      repository: elastic/DaveOps-playground
       pipeline_file: ".buildkite/bump_sh.yml"
       teams:
         eng-prod-engagement-team:
