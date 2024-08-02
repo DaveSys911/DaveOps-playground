@@ -18,6 +18,8 @@ steps:
             label: ":mag: Check API diff"
             command:
               - bump diff --doc serverless --token $BUMP_TOKEN --file oas_docs/kibana.serverless.yaml --fail-on-breaking
+      agents:
+        image: "docker.elastic.co/ci-agent-images/pipelib"
 
   # - label: ":speech_balloon: Comment PR with API diff"
   #   if: build.pull_request.id != null
