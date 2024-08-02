@@ -1,4 +1,34 @@
-# $yaml-language-server: $schema=https://raw.githubusercontent.com/buildkite/pipeline-schema/main/schema.json
 steps:
-  - label: "Build"
-    command: "echo 'hello world'"
+  # - label: ":rocket: Deploy API documentation"
+  #   if: build.branch == 'main' && build.pull_request.id == null
+  #   command:
+  #     - bump deploy --doc serverless --token $BUMP_TOKEN --file oas_docs/kibana.serverless.yaml
+
+  - label: ":mag: Check API diff"
+    # if: build.pull_request.id != null
+    plugins:
+    - elastic/vault-secrets#v0.0.3:
+        path: "secret/ci/elastic-DaveOps-playground/doc-token"
+        filed: "token"
+        env_var: "BUMP_TOKEN"
+    - monorepo-diff#v1.0.1:
+        watch:
+        - path: oas_docs/kibana.serverless.yaml
+          config:
+            label: ":mag: Check API diff"
+            command:
+              - bump diff --doc serverless --token $BUMP_TOKEN --file oas_docs/kibana.serverless.yaml --fail-on-breaking
+
+  # - label: ":speech_balloon: Comment PR with API diff"
+  #   if: build.pull_request.id != null
+  #   command:
+  #     - bump diff --doc serverless --token $BUMP_TOKEN --file oas_docs/kibana.serverless.yaml --format markdown > api_diff.md
+  #     - buildkite-agent pipeline upload <<YAML
+  #       steps:
+  #         - label: ":github: Post PR Comment"
+  #           plugins:
+  #             - github-commit-status#v1.3.0:
+  #                 context: "API Diff Comment"
+  #             - github-pull-request-comment#v1.0.0:
+  #                 body-file: api_diff.md
+  #       YA
